@@ -36,7 +36,7 @@ const novels: NovelConfig[] = [
     author: '最后一个名',
     sourceFile: '战国野心家.txt',
     chapterPattern: /^第([一二三四五六七八九十百千]+)章\s/,
-    chapterNumberParser: parseChineseNumber,
+    chapterNumberParser: (m) => parseChineseNumber(m[1]),
     genre: ['历史', '争霸', '诸子百家'],
     status: 'completed',
   },

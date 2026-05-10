@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import "./globals.css";
 
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Novel Analysis Lab",
-  description: "小说拆解学习系统 — 读、分析、笔记、创作辅助",
+  title: "Novel Net Note | 我的纯净书库",
+  description: "一个极简、充满人文气息的阅读笔记工具",
 };
 
 export default function RootLayout({
@@ -28,9 +29,12 @@ export default function RootLayout({
       lang="zh-CN"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <Header />
-        <main className="flex-1 flex flex-col">{children}</main>
+      <body className="flex h-screen overflow-hidden bg-[#FAFAFA] text-slate-800 font-sans">
+        <Sidebar />
+        <div className="flex flex-col flex-1 overflow-hidden relative">
+          <Header />
+          <main className="flex-1 overflow-y-auto scroll-smooth">{children}</main>
+        </div>
       </body>
     </html>
   );

@@ -2,10 +2,10 @@ import Link from "next/link";
 import type { NovelMeta } from "@/lib/types";
 
 const statusMap: Record<string, { label: string; color: string }> = {
-  ongoing: { label: "连载中", color: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" },
-  completed: { label: "已完结", color: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400" },
-  hiatus: { label: "断更", color: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400" },
-  cancelled: { label: "已取消", color: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" },
+  ongoing: { label: "连载中", color: "bg-emerald-50 text-emerald-600" },
+  completed: { label: "已完结", color: "bg-blue-50 text-blue-600" },
+  hiatus: { label: "断更", color: "bg-amber-50 text-amber-600" },
+  cancelled: { label: "已取消", color: "bg-rose-50 text-rose-600" },
 };
 
 export function NovelCard({ novel }: { novel: NovelMeta }) {
@@ -14,24 +14,26 @@ export function NovelCard({ novel }: { novel: NovelMeta }) {
   return (
     <Link
       href={`/novels/${novel.slug}`}
-      className="block rounded-xl border border-zinc-200 bg-white p-5 transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+      className="group block rounded-2xl border border-slate-100 bg-white p-6 transition-all hover:shadow-[0_4px_24px_rgba(0,0,0,0.04)] hover:-translate-y-0.5"
     >
-      <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">{novel.title}</h3>
-      <p className="mt-1 text-sm text-zinc-500">{novel.author}</p>
-      <div className="mt-3 flex flex-wrap items-center gap-1.5">
-        <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${status.color}`}>
+      <h3 className="font-semibold text-slate-900 group-hover:text-slate-700 transition-colors">
+        {novel.title}
+      </h3>
+      <p className="mt-1 text-sm text-slate-400">{novel.author}</p>
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${status.color}`}>
           {status.label}
         </span>
         {novel.genre.slice(0, 3).map((g) => (
           <span
             key={g}
-            className="inline-flex rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+            className="inline-flex rounded-full bg-slate-50 px-2.5 py-0.5 text-xs text-slate-500"
           >
             {g}
           </span>
         ))}
       </div>
-      <div className="mt-3 flex items-center gap-3 text-xs text-zinc-400">
+      <div className="mt-4 flex items-center gap-3 text-xs text-slate-300">
         <span>{novel.chapterCount} 章</span>
         <span>{(novel.wordCount / 10000).toFixed(0)} 万字</span>
       </div>

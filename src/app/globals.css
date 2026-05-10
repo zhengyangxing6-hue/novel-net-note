@@ -9,24 +9,28 @@
   --font-mono: var(--font-geist-mono);
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  body {
+    @apply bg-[#FAFAFA] text-slate-800 antialiased;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  ::selection {
+    @apply bg-blue-100 text-blue-900;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
-  font-size: 15px;
-  line-height: 1.7;
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300;
 }
 
 /* 分屏阅读器面板滚动 */
@@ -34,10 +38,6 @@ body {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #d1d5db transparent;
-}
-
-.dark .panel-scroll {
-  scrollbar-color: #4b5563 transparent;
 }
 
 /* 右键菜单 */
@@ -51,11 +51,6 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 4px;
   font-size: 14px;
-}
-
-.dark .context-menu {
-  background: #1f2937;
-  border-color: #374151;
 }
 
 .context-menu-item {
@@ -72,17 +67,8 @@ body {
   background: #f3f4f6;
 }
 
-.dark .context-menu-item:hover {
-  background: #374151;
-}
-
 /* 原文面板文字选中高亮 */
 .original-text ::selection {
   background: #fde68a;
   color: #171717;
-}
-
-/* 防抖保存状态提示 */
-.save-indicator {
-  transition: opacity 0.3s ease;
 }
