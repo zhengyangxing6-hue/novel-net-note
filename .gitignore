@@ -36,6 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# playwright mcp temp files
+.playwright-mcp/
+
+# sqlite index (generated)
+/data/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

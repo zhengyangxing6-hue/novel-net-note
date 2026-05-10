@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@plugin "@tailwindcss/typography";
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +24,65 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* 分屏阅读器面板滚动 */
+.panel-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.dark .panel-scroll {
+  scrollbar-color: #4b5563 transparent;
+}
+
+/* 右键菜单 */
+.context-menu {
+  position: fixed;
+  z-index: 50;
+  min-width: 180px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  font-size: 14px;
+}
+
+.dark .context-menu {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.context-menu-item:hover {
+  background: #f3f4f6;
+}
+
+.dark .context-menu-item:hover {
+  background: #374151;
+}
+
+/* 原文面板文字选中高亮 */
+.original-text ::selection {
+  background: #fde68a;
+  color: #171717;
+}
+
+/* 防抖保存状态提示 */
+.save-indicator {
+  transition: opacity 0.3s ease;
 }
