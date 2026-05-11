@@ -4,6 +4,7 @@ import path from 'path';
 import type { GrepResult } from './types';
 
 const CONTEXT_LINES = 2;
+const MAX_RESULTS = 50;
 
 /**
  * 在所有章节原文中搜索关键词，返回所有出现位置及上下文。
@@ -32,6 +33,8 @@ async function searchWithNode(originalDir: string, term: string): Promise<GrepRe
   }
 
   for (const file of files) {
+    if (results.length >= MAX_RESULTS) break;
+
     const chapterMatch = file.match(/chapter-(\d+)\.txt$/);
     if (!chapterMatch) continue;
 
@@ -40,6 +43,7 @@ async function searchWithNode(originalDir: string, term: string): Promise<GrepRe
     const lines = content.split('\n');
 
     for (let i = 0; i < lines.length; i++) {
+      if (results.length >= MAX_RESULTS) break;
       if (lines[i].includes(term)) {
         const start = Math.max(0, i - CONTEXT_LINES);
         const end = Math.min(lines.length, i + CONTEXT_LINES + 1);

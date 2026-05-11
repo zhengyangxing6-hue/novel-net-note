@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import type { NovelMeta } from "@/lib/types";
+import { BookOpen } from "lucide-react";
 
 const statusMap: Record<string, { label: string; color: string }> = {
   ongoing: { label: "连载中", color: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400" },
@@ -10,6 +14,12 @@ const statusMap: Record<string, { label: string; color: string }> = {
 
 export function NovelCard({ novel }: { novel: NovelMeta }) {
   const status = statusMap[novel.status] ?? statusMap.ongoing;
+  const [progress, setProgress] = useState<number | null>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(`reading-progress-${novel.slug}`);
+    if (saved) setProgress(parseInt(saved, 10));
+  }, [novel.slug]);
 
   return (
     <Link
@@ -23,10 +33,7 @@ export function NovelCard({ novel }: { novel: NovelMeta }) {
           {status.label}
         </span>
         {novel.genre.slice(0, 3).map((g) => (
-          <span
-            key={g}
-            className="inline-flex rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
-          >
+          <span key={g} className="inline-flex rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">
             {g}
           </span>
         ))}
@@ -34,7 +41,18 @@ export function NovelCard({ novel }: { novel: NovelMeta }) {
       <div className="mt-3 flex items-center gap-3 text-xs text-zinc-400">
         <span>{novel.chapterCount} 章</span>
         <span>{(novel.wordCount / 10000).toFixed(0)} 万字</span>
+        {progress && (
+          <span className="flex items-center gap-1 text-blue-500">
+            <BookOpen className="h-3 w-3" />
+            读到第 {progress} 章
+          </span>
+        )}
       </div>
+      {progress && (
+        <div className="mt-2 h-1 w-full rounded-full bg-zinc-100 dark:bg-zinc-800">
+          <div className="h-full rounded-full bg-blue-400" style={{ width: `${(progress / (novel.chapterCount || 1)) * 100}%` }} />
+        </div>
+      )}
     </Link>
   );
 }

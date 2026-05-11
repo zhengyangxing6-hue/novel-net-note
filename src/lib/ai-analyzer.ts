@@ -5,6 +5,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { searchInNovel } from './grep';
 import { formatChapterFilename } from './content-parser';
+import { readHighlightsSync, highlightsToPromptRules } from './highlights';
 import type { ChapterAnalysis, CharacterProfile, GlossaryTerm, VolumeSummary } from './types';
 
 const CONTENT_ROOT = path.resolve(process.cwd(), 'content/novels');
@@ -126,10 +127,6 @@ tags: ["<标签1>", "<标签2>"]
 ## 详细剧情
 （用2-3段详细描述本章的剧情发展，包含场景切换）
 
-## 关键对话
-> "原文引用1"
-> "原文引用2"
-
 ## 写作技巧分析
 （分析本章用到的写作技巧，以及可以从中学到什么）
 \`\`\`
@@ -158,6 +155,10 @@ export async function generateChapterAnalysis(
   // 截断过长的原文（保留前 8000 字符）
   const truncated = originalText.length > 8000 ? originalText.slice(0, 8000) + '\n\n[... 后续内容已截断 ...]' : originalText;
 
+  // 注入用户自定义提示词规则
+  const highlights = readHighlightsSync(novelSlug);
+  const customRules = highlightsToPromptRules(highlights);
+
   const userMessage = `请分析以下小说章节原文，生成结构化分析：
 
 小说 slug：${novelSlug}
@@ -168,7 +169,7 @@ export async function generateChapterAnalysis(
 ${truncated}
 \`\`\``;
 
-  const response = await callAI(CHAPTER_ANALYSIS_SYSTEM, userMessage);
+  const response = await callAI(CHAPTER_ANALYSIS_SYSTEM + customRules, userMessage);
   const { data, content } = parseAIResponse<ChapterAnalysis>(response);
 
   // 保存到 analysis/ 目录

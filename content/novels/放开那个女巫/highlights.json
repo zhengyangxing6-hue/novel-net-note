@@ -1,0 +1,32 @@
+{
+  "categories": {
+    "主角团": {
+      "color": "#DBEAFE",
+      "style": "underline"
+    },
+    "反派": {
+      "color": "#FEE2E2",
+      "style": "bg"
+    },
+    "女巫": {
+      "color": "#FCE7F3",
+      "style": "bg"
+    },
+    "概念": {
+      "color": "#FEF3C7",
+      "style": "bg"
+    },
+    "法术": {
+      "color": "#E9D5FF",
+      "style": "bg"
+    },
+    "地点": {
+      "color": "#CCFBF1",
+      "style": "italic"
+    }
+  },
+  "terms": {
+    "女巫": "主角团",
+    "罗兰": "主角团"
+  }
+}

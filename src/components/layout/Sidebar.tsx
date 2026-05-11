@@ -27,6 +27,7 @@ const sections = [
   { href: "/glossary", label: "术语", icon: BookMarked },
   { href: "/events", label: "事件", icon: Lightbulb },
   { href: "/summary", label: "总结", icon: FileText },
+  { href: "/prompts", label: "提示词", icon: Lightbulb },
 ];
 
 export function Sidebar({ slug }: SidebarProps) {
